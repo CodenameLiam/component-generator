@@ -1,6 +1,6 @@
-# mk-component-generator README
+# Component-generator README
 
-This is the README for your extension "mk-component-generator". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "component-generator". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 
