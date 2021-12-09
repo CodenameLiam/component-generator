@@ -1,0 +1,123 @@
+{
+    "name": "mk-component-generator",
+    "displayName": "MK Component Generator",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.62.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:mk-component-generator.create-react-component",
+        "onCommand:mk-component-generator.create-react-native-component"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "mk-component-generator.create-react-component",
+                "title": "Create React Component"
+            },
+            {
+                "command": "mk-component-generator.create-react-native-component",
+                "title": "Create React Native Component"
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "when": "explorerResourceIsFolder",
+                    "command": "mk-component-generator.create-react-component",
+                    "group": "1@MK"
+                },
+                {
+                    "when": "explorerResourceIsFolder",
+                    "command": "mk-component-generator.create-react-native-component",
+                    "group": "1@MK"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "MK Component Generator",
+            "properties": {
+                "MKComponentGenerator.componentTemplate": {
+                    "type": "string",
+                    "editPresentation": "multilineText",
+                    "default": "import React, { FC } from 'react';\nimport * as Styles from './${componentName}.styles'\n\ninterface ${componentName}Props {}\n\nconst ${componentName}: FC<${componentName}Props> = () => {\n    return (\n        <Styles.Container>\n         \n        </Styles.Container>\n    );   \n}\n\nexport default ${componentName}",
+                    "markdownDescription": "Template for generating a component. Make sure you use the ${componentName} template string to make use of your component name argument"
+                },
+                "MKComponentGenerator.indexTemplate": {
+                    "type": "string",
+                    "editPresentation": "multilineText",
+                    "default": "export { default } from './${componentName}';\nexport * from './${componentName}';",
+                    "markdownDescription": "Template for generating an index component. Make sure you use the ${componentName} template string to make use of your component name argument"
+                },
+                "MKComponentGenerator.styleTemplate": {
+                    "type": "string",
+                    "editPresentation": "multilineText",
+                    "default": "import styled from '@emotion/styled';\n\nexport const Container = styled.View``",
+                    "markdownDescription": "Template for generating a styled component."
+                },
+                "MKComponentGenerator.nativeStyleTemplate": {
+                    "type": "string",
+                    "editPresentation": "multilineText",
+                    "default": "import styled from '@emotion/native';\n\nexport const Container = styled.View``",
+                    "markdownDescription": "Template for generating a native styled component."
+                },
+                "MKComponentGenerator.storyTemplate": {
+                    "type": "string",
+                    "editPresentation": "multilineText",
+                    "default": "import React from 'react';\nimport { Story, Meta } from '@storybook/react';\nimport { ${componentName}, ${componentName}Props } from '../${componentName}';\n\nexport default {\n  component: ${componentName},\n  title: 'Components/${componentName}',\n} as Meta;\n\nconst Template: Story<${componentName}Props> = args => <${componentName} {...args} />;\n\nexport const Primary = Template.bind({});\n\nPrimary.args = {\n  label: '${componentName}',\n};",
+                    "markdownDescription": "Template for generating a story component. Make sure you use the ${componentName} template string to make use of your component name argument"
+                },
+                "MKComponentGenerator.nativeStoryTemplate": {
+                    "type": "string",
+                    "editPresentation": "multilineText",
+                    "default": "import React from 'react';\nimport {storiesOf} from '@storybook/react-native';\nimport { StoryWrapper } from 'App.styles';\nimport ${componentName} from '../${componentName}';\n\nexport default { title: '${componentName}'};\n\nstoriesOf('${componentName}', module).add('base story', () => (\n    <StoryWrapper>\n        <${componentName} />\n    </StoryWrapper>\n));",
+                    "markdownDescription": "Template for generating a native story component. Make sure you use the ${componentName} template string to make use of your component name argument"
+                },
+                "MKComponentGenerator.testTemplate": {
+                    "type": "string",
+                    "editPresentation": "multilineText",
+                    "default": "import { render, screen } from '@testing-library/react';\nimport ${componentName} from '../${componentName}';\n\nit('renders correctly', () => {\n    render(<${componentName} />);\n});",
+                    "markdownDescription": "Template for generating a test component. Make sure you use the ${componentName} template string to make use of your component name argument"
+                },
+                "MKComponentGenerator.nativeTestTemplate": {
+                    "type": "string",
+                    "editPresentation": "multilineText",
+                    "default": "import 'react-native';\nimport React from 'react';\nimport ${componentName} from '../${componentName}';\n\nimport renderer from 'react-test-renderer';\n\nit('renders correctly', () => {\n    renderer.create(<${componentName} />);\n});",
+                    "markdownDescription": "Template for generating a native test component. Make sure you use the ${componentName} template string to make use of your component name argument"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "yarn run package",
+        "compile": "webpack",
+        "watch": "webpack --watch",
+        "package": "webpack --mode production --devtool hidden-source-map",
+        "compile-tests": "tsc -p . --outDir out",
+        "watch-tests": "tsc -p . -w --outDir out",
+        "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.4",
+        "@types/mocha": "^9.0.0",
+        "@types/node": "14.x",
+        "@types/vscode": "^1.62.0",
+        "@typescript-eslint/eslint-plugin": "^5.1.0",
+        "@typescript-eslint/parser": "^5.1.0",
+        "@vscode/test-electron": "^1.6.2",
+        "eslint": "^8.1.0",
+        "glob": "^7.1.7",
+        "mocha": "^9.1.3",
+        "ts-loader": "^9.2.5",
+        "typescript": "^4.4.4",
+        "webpack": "^5.52.1",
+        "webpack-cli": "^4.8.0"
+    }
+}
