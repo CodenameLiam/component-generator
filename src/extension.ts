@@ -147,8 +147,8 @@ const promptForAdditionalTemplateOptions = async (): Promise<AdditionalTemplateO
 
     const additionalTemplateSelection = await vscode.window.showQuickPick(
         [
-            { id: 'test', label: 'Generate Tests', picked: true },
-            { id: 'story', label: 'Generate Story', picked: true },
+            { id: 'test', label: 'Generate Tests', picked: false },
+            { id: 'story', label: 'Generate Story', picked: false },
         ],
         {
             canPickMany: true,
