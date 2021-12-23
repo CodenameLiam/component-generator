@@ -3,6 +3,11 @@
     "displayName": "MK Component Generator",
     "description": "",
     "version": "0.0.1",
+    "icon": "images/icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/CodenameLiam/component-generator"
+    },
     "engines": {
         "vscode": "^1.62.0"
     },
